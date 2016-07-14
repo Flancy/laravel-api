@@ -1,0 +1,56 @@
+html {
+  font-size: 100%;
+}
+body {
+  font-family: "Roboto";
+  font-weight: normal;
+  padding-top: 100px;
+}
+a,
+button,
+input[type=submit],
+input[type=button],
+select,
+.bootstrap-select .dropdown-toggle {
+  outline: none !important;
+}
+a:focus,
+button:focus,
+input[type=submit]:focus,
+input[type=button]:focus,
+select:focus,
+.bootstrap-select .dropdown-toggle:focus {
+  outline: none !important;
+}
+.fa {
+  width: 20px;
+}
+.navbar-brand img {
+  height: 32px;
+}
+.form-control,
+.lead-page .panel-lead .lead-info-label,
+.lead-page .panel-lead .lead-info-value {
+  font-size: 0.875rem;
+}
+.btn {
+  font-size: 0.75rem;
+}
+.btn-file,
+#changeAvatar {
+  font-size: 0.625rem;
+}
+.panel-heading,
+.navbar-default .navbar-nav>li>a {
+  font-size: 0.86rem;
+}
+.company-nav .list-group-item,
+.settings .form-raw .form-head,
+.form-horizontal .control-label {
+  font-size: 0.8rem;
+}
+.debit .debit-head p {
+  font-size: 1.375rem;
+}
+
+/*# sourceMappingURL=main.css.map */

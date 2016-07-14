@@ -1,0 +1,34 @@
+var elixir = require('laravel-elixir');
+
+require('laravel-elixir-stylus');
+require('laravel-elixir-vueify');
+
+elixir(function(mix) {
+    mix.stylus('main.styl', 'resources/assets/css/main.css');
+    mix.browserify('vue.app.js', 'resources/assets/js/vue.js');
+
+    mix.styles([
+        'bootstrap/css/bootstrap-theme-spark.css',
+        'bootstrap/css/bootstrap-select.min.css',
+        'bootstrap/css/bootstrap-checkbox.min.css',
+        'bootstrap/css/bootstrap-datetimepicker.min.css',
+        'main.css',
+        'media.css'
+    ]);
+
+    mix.scripts([
+        'jquery/jquery.min.js',
+        'moment/moment-with-locales.js',
+        'bootstrap/js/bootstrap.min.js',
+        'bootstrap/js/bootstrap-select.min.js',
+        'bootstrap/js/i18n/defaults-ru_RU.min.js',
+        'bootstrap/js/bootstrap-money-field.js',
+        'bootstrap/js/bootstrap-datetimepicker.min.js',
+        'app.js',
+        'vue.js'
+    ]);
+
+    mix.browserSync({
+        proxy: 'laravel.api.dev'
+    });
+});
