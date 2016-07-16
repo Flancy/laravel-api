@@ -18,3 +18,11 @@ Route::get('/', function () {
 Route::auth();
 
 Route::get('/home', 'HomeController@index');
+
+Route::group(['middleware' => 'auth', 'namespace' => 'Api\v1'], function (){
+	Route::resource('user', 'UserController');
+});
+
+Route::group(['middleware' => ['web', 'auth'], 'namespace' => 'User'], function (){
+	Route::resource('setting', 'SettingController');
+});

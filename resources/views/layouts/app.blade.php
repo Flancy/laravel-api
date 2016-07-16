@@ -50,7 +50,8 @@
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Выход</a></li>
+                                <li><a href="{{ url('/setting') }}"><i class="fa fa-cog" aria-hidden="true"></i>Настройки</a></li>
+                                <li><a href="{{ url('/logout') }}"><i class="fa fa-sign-out" aria-hidden="true"></i>Выход</a></li>
                             </ul>
                         </li>
                     @endif
