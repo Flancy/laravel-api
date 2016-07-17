@@ -13,15 +13,12 @@
 
                         <div class="panel-body panel-photo">
 
-                            @if (count($errors) > 0)
-                                <div class="alert alert-danger text-left">
-                                    @foreach ($errors->all() as $error)
-                                        <p class="text-danger">{{ $error }}</p>
-                                    @endforeach
-                                </div>
-                            @endif
+                            
+                            <div class="alert alert-danger text-left" v-if="formPhotoErrors.photo">
+                                <p class="text-danger">@{{ formPhotoErrors.photo }}</p>
+                            </div>
 
-                            <form action="/setting/photo" class="form-horizontal" role="form" method="post" enctype="multipart/form-data">
+                            <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data" id="formPhoto" @submit.prevent="submitPhoto">
                                 
                                 {{ csrf_field() }}
 
@@ -36,7 +33,7 @@
                                     <div class="col-md-12">
                                         <label type="button" class="btn btn-primary btn-upload">
                                             <span>Выберите новое изображение</span>
-                                            <input type="file" class="form-control" name="photo">
+                                            <input type="file" class="form-control" name="photo" @change="submitPhoto">
                                         </label>
                                     </div>
                                 </div>

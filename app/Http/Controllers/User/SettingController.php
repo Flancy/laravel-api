@@ -81,8 +81,8 @@ class SettingController extends Controller
         $validator = $this->validationPhoto($request->all());
 
         if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator);
-            //return response()->json(['errors' => $validator->errors()], 422);
+            //return redirect()->back()->withErrors($validator);
+            return response()->json(['errors' => $validator->errors()], 422);
         }
 
         $imgName = $this->getMimeTypeAndSetImgName($request->photo);

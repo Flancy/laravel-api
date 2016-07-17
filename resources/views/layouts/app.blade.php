@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta id="token" name="token" content="{{ csrf_token() }}">
 
     <title>Laravel</title>
 
@@ -50,7 +51,7 @@
                     @else
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                <img src="{{ Auth::user()->userInfo->photo }}" class="spark-nav-profile-photo m-r-xs">
+                                <img :src="user.user_info.photo" class="spark-nav-profile-photo m-r-xs">
                                 <span class="caret"></span>
                             </a>
 
