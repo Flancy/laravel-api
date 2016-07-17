@@ -34,7 +34,11 @@
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url('/home') }}">Главная</a></li>
+                    <li><a href="{{ url('/home') }}" class="
+                    {{
+                        Request::is('home')? 'active-link': ''
+                    }}
+                    ">Главная</a></li>
                 </ul>
 
                 <!-- Right Side Of Navbar -->
@@ -46,12 +50,15 @@
                     @else
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                {{ Auth::user()->name }} <span class="caret"></span>
+                                <img src="{{ Auth::user()->userInfo->photo }}" class="spark-nav-profile-photo m-r-xs">
+                                <span class="caret"></span>
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ url('/setting') }}"><i class="fa fa-cog" aria-hidden="true"></i>Настройки</a></li>
-                                <li><a href="{{ url('/logout') }}"><i class="fa fa-sign-out" aria-hidden="true"></i>Выход</a></li>
+                                <li class="dropdown-header">Настройки</li>
+                                    <li><a href="{{ url('/setting') }}"><i class="fa fa-btn fa-cog" aria-hidden="true"></i>Настройки</a></li>
+                                <li class="divider"></li>
+                                <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out" aria-hidden="true"></i>Выход</a></li>
                             </ul>
                         </li>
                     @endif

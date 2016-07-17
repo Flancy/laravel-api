@@ -4,10 +4,12 @@
         <div class="panel-body">
         	<div class="spark-settings-tabs">
         		<ul class="nav spark-settings-stacked-tabs">
-        			<li class="{{
+        			<li class="
+                    {{
                         Request::is('setting')? 'active': ''
-                        }}">
-        				<a href="{{ url('/setting') }}">Настройки</a>
+                    }}
+                    ">
+        				<a href="{{ url('/setting') }}">Главные</a>
         			</li>
 	            </ul>
         	</div>

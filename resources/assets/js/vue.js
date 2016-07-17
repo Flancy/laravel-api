@@ -11525,7 +11525,41 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 _vue2.default.use(_vueResource2.default);
 
 var vm = new _vue2.default({
-  el: '#app'
+  el: '#app',
+
+  /*
+  http: {
+    headers: {
+      'X-CSRF-TOKEN': document.querySelector('#token').getAttribute('value')
+    }
+  },
+  */
+  data: {
+    user: {
+      user_info: {
+        photo: ''
+      }
+    },
+    loading: false
+  },
+
+  methods: {
+    getUser: function getUser() {
+      var self = this;
+
+      this.loading = true;
+
+      this.$http.get('/api/v1/user').then(function (response) {
+        self.$set('user', response.json().user);
+
+        self.loading = false;
+      });
+    }
+  },
+
+  ready: function ready() {
+    this.getUser();
+  }
 });
 
 },{"vue":3,"vue-resource":2}]},{},[4]);

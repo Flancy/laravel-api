@@ -7496,8 +7496,29 @@ select:focus,
 .fa {
   width: 20px;
 }
+.active-link {
+  text-decoration: underline;
+}
 .navbar-brand img {
   height: 32px;
+}
+.navbar-default .navbar-nav > li > a {
+  font-weight: bold;
+}
+.navbar-default .navbar-nav > .open > a {
+  background-color: transparent !important;
+}
+.setting .panel-photo {
+  text-align: center;
+}
+.setting .panel-photo .profile-photo-preview {
+  width: 220px;
+  height: 220px;
+  display: inline-block;
+  vertical-align: middle;
+  background-position: center;
+  background-size: cover;
+  border-radius: 6px;
 }
 .form-control,
 .lead-page .panel-lead .lead-info-label,

@@ -19,10 +19,11 @@ Route::auth();
 
 Route::get('/home', 'HomeController@index');
 
-Route::group(['middleware' => 'auth', 'namespace' => 'Api\v1'], function (){
+Route::group(['prefix' => 'api/v1', 'middleware' => 'auth', 'namespace' => 'Api\v1'], function (){
 	Route::resource('user', 'UserController');
 });
 
-Route::group(['middleware' => ['web', 'auth'], 'namespace' => 'User'], function (){
+Route::group(['middlewareGroups' => ['web'], 'middleware' => 'auth', 'namespace' => 'User'], function (){
+	Route::post('/setting/photo', 'SettingController@updatePhoto');
 	Route::resource('setting', 'SettingController');
 });
