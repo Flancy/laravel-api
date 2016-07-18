@@ -25,5 +25,6 @@ Route::group(['prefix' => 'api/v1', 'middleware' => 'auth', 'namespace' => 'Api\
 
 Route::group(['middlewareGroups' => ['web'], 'middleware' => 'auth', 'namespace' => 'User'], function (){
 	Route::post('/setting/photo', 'SettingController@updatePhoto');
+	Route::post('/setting/contact', 'SettingController@updateContactInfo');
 	Route::resource('setting', 'SettingController');
 });

@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Validator;
 use Image;
+use Auth;
 
 class SettingController extends Controller
 {
@@ -76,12 +77,27 @@ class SettingController extends Controller
         //
     }
 
+    public function updateContactInfo(Request $request)
+    {
+        $validator = $this->validationContactInfo($request->all());
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $user = $request->user();
+        $name = $user->name = $request->name;
+        $email = $user->email = $request->email;
+        $user->save();
+
+        return response()->json(['name' => $name, 'email' => $email], 200);
+    }
+
     public function updatePhoto(Request $request)
     {
         $validator = $this->validationPhoto($request->all());
 
         if ($validator->fails()) {
-            //return redirect()->back()->withErrors($validator);
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
@@ -100,6 +116,20 @@ class SettingController extends Controller
     {
         return Validator::make($data, [
             'photo' => 'required|image',
+        ]);
+    }
+
+    public function validationContactInfo(array $data)
+    {
+        if ($data['email'] == Auth::user()->email) {
+            return Validator::make($data, [
+                'name' => 'required|max:255',
+            ]);
+        }
+
+        return Validator::make($data, [
+            'name' => 'required|max:255',
+            'email' => 'required|email|max:255|unique:users',
         ]);
     }
 

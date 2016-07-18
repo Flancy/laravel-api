@@ -51,7 +51,7 @@
                     @else
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                <img :src="user.user_info.photo" class="spark-nav-profile-photo m-r-xs">
+                                <img src="{{ Auth::user()->userInfo->photo }}" class="spark-nav-profile-photo m-r-xs" id="navPhoto">
                                 <span class="caret"></span>
                             </a>
 
