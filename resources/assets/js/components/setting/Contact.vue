@@ -51,7 +51,7 @@
 
 <script>
     export default {
-        props: ['user', 'formContactErrors'],
+        props: ['user'],
 
         http: {
             headers: {
@@ -59,24 +59,25 @@
             }
         },
 
-        data: function () {
+        data () {
             return {
                 success: {
                     status: false,
                     text: ''
-                }
+                },
+                formContactErrors: false,
             }
         },
 
         methods: {
-            submitContactInfo: function submitContactInfo(e) {
+            submitContactInfo (e) {
                 var self = this;
                 var form = $('#formContact');
                 var formData = JSON.stringify(this.user);
 
                 this.$http.post('/setting/contact', formData).then(function (status, response) {
                     form.onsubmit = function() {
-                      return false;
+                        return false;
                     }
 
                     if (status.status == 200) {
@@ -94,7 +95,7 @@
                 })
 
                 setTimeout(function () {
-                    self.$parent.$set('formContactErrors', false)
+                    self.$set('formContactErrors', false)
                 }, 5000);
             }
         }

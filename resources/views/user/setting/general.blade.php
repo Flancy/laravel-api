@@ -8,15 +8,7 @@
 
             @section('general')
                 <div class="col-md-9">
-                    <setting-photo 
-                    :user.sync="user"
-                    :form-photo-input.sync="formPhotoInput"
-                    :form-photo-errors.sync="formPhotoErrors"></setting-photo>
-
-                    
-                    <setting-contact
-                    :user.sync="user"
-                    :form-contact-errors.sync="formContactErrors"></setting-contact>
+                    <setting></setting>
                 </div>
             @show
         </div>

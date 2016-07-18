@@ -2,8 +2,7 @@ import Vue from 'vue';
 import VueResource from 'vue-resource';
 import Vuex from 'vuex';
 
-import SettingPhoto from './components/setting/Photo.vue';
-import SettingContact from './components/setting/Contact.vue';
+import Setting from './components/setting/General.vue';
 
 Vue.use(VueResource);
 Vue.use(Vuex);
@@ -18,40 +17,18 @@ var vm = new Vue({
     },
 
     data: {
-      	user: {
-            user_info: {
-              photo: ''
-            }
-        },
-
-        formPhotoInput: {},
-        formPhotoErrors: false,
-        
-        formContactErrors: false,
-
-        loading: false
+      	//
     },
 
     components: {
-        SettingPhoto,
-        SettingContact
+        Setting
     },
 
     methods: {
-        getUser: function getUser() {
-            var self = this;
-
-            this.loading = true;
-
-            this.$http.get('/api/v1/user').then(function (response) {
-                self.$set('user', response.json().user);
-
-                self.loading = false;
-            })
-        }
+        //
     },
 
     ready: function () {
-        this.getUser();
+        //
     }
 });

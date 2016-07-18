@@ -12498,7 +12498,7 @@ var _stringify2 = _interopRequireDefault(_stringify);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
-    props: ['user', 'formContactErrors'],
+    props: ['user'],
 
     http: {
         headers: {
@@ -12511,9 +12511,11 @@ exports.default = {
             success: {
                 status: false,
                 text: ''
-            }
+            },
+            formContactErrors: false
         };
     },
+
 
     methods: {
         submitContactInfo: function submitContactInfo(e) {
@@ -12540,7 +12542,7 @@ exports.default = {
             });
 
             setTimeout(function () {
-                self.$parent.$set('formContactErrors', false);
+                self.$set('formContactErrors', false);
             }, 5000);
         }
     }
@@ -12561,42 +12563,110 @@ if (module.hot) {(function () {  module.hot.accept()
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+    value: true
+});
+
+var _Photo = require('./Photo.vue');
+
+var _Photo2 = _interopRequireDefault(_Photo);
+
+var _Contact = require('./Contact.vue');
+
+var _Contact2 = _interopRequireDefault(_Contact);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+    components: {
+        SettingPhoto: _Photo2.default,
+        SettingContact: _Contact2.default
+    },
+
+    ready: function ready() {
+        this.getUser();
+    },
+    data: function data() {
+        return {
+            user: {
+                user_info: {
+                    photo: ''
+                }
+            }
+        };
+    },
+
+
+    methods: {
+        getUser: function getUser() {
+            var self = this;
+
+            this.$http.get('/api/v1/user').then(function (response) {
+                self.$set('user', response.json().user);
+            });
+        }
+    }
+};
+if (module.exports.__esModule) module.exports = module.exports.default
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n\t<div id=\"root\">\n\t\t<setting-photo :user.sync=\"user\">\n        </setting-photo>\n        <setting-contact :user.sync=\"user\" :form-contact-errors.sync=\"formContactErrors\">\n        </setting-contact>\n\t</div>\n"
+if (module.hot) {(function () {  module.hot.accept()
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), true)
+  if (!hotAPI.compatible) return
+  if (!module.hot.data) {
+    hotAPI.createRecord("_v-69e538cf", module.exports)
+  } else {
+    hotAPI.update("_v-69e538cf", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
+  }
+})()}
+},{"./Contact.vue":9,"./Photo.vue":11,"vue":7,"vue-hot-reload-api":5}],11:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
 });
 exports.default = {
-	props: ['user', 'formPhotoInput', 'formPhotoErrors'],
+  props: ['user'],
 
-	http: {
-		headers: {
-			'X-CSRF-TOKEN': document.querySelector('#token').getAttribute('content')
-		}
-	},
+  data: function data() {
+    return {
+      formPhotoInput: false,
+      formPhotoErrors: false
+    };
+  },
 
-	methods: {
-		submitPhoto: function submitPhoto(e) {
-			var self = this;
-			var form = $('#formPhoto');
-			var navPhoto = $('#navPhoto');
-			var formData = new FormData(form[0]);
 
-			this.$parent.formPhotoInput = formData;
+  http: {
+    headers: {
+      'X-CSRF-TOKEN': document.querySelector('#token').getAttribute('content')
+    }
+  },
 
-			this.$http.post('/setting/photo', this.$parent.formPhotoInput).then(function (response) {
-				form.onsubmit = function () {
-					return false;
-				};
-				self.$parent.$set('user.user_info.photo', response.json().image);
-				navPhoto.attr('src', self.user.user_info.photo);
-			}).catch(function (data, status, request) {
-				var errors = data.json().errors;
-				this.formPhotoErrors = errors;
-			});
+  methods: {
+    submitPhoto: function submitPhoto(e) {
+      var self = this;
+      var form = $('#formPhoto');
+      var navPhoto = $('#navPhoto');
+      var formData = new FormData(form[0]);
 
-			setTimeout(function () {
-				self.$parent.$set('formPhotoErrors', false);
-			}, 5000);
-		}
-	}
+      this.formPhotoInput = formData;
+
+      this.$http.post('/setting/photo', this.formPhotoInput).then(function (response) {
+        form.onsubmit = function () {
+          return false;
+        };
+
+        self.$parent.$set('user.user_info.photo', response.json().image);
+        navPhoto.attr('src', self.user.user_info.photo);
+      }).catch(function (data, status, request) {
+        var errors = data.json().errors;
+        self.formPhotoErrors = errors;
+      });
+
+      setTimeout(function () {
+        self.$set('formPhotoErrors', false);
+      }, 5000);
+    }
+  }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
 ;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n\t<div>\n\t\t<div class=\"panel panel-info\">\n            <div class=\"panel-heading\">Изображение профиля</div>\n\n            <div class=\"panel-body panel-photo\">\n\n                \n                <div class=\"alert alert-danger text-left\" v-if=\"formPhotoErrors\">\n                    <p class=\"text-danger\">{{ formPhotoErrors.photo }}</p>\n                </div>\n\n                <form class=\"form-horizontal\" role=\"form\" method=\"post\" enctype=\"multipart/form-data\" id=\"formPhoto\" @submit.prevent=\"submitPhoto\">\n\n                    <div class=\"form-group\">\n                        <div class=\"col-md-12\">\n                            <span role=\"img\" class=\"profile-photo-preview\" :style=\"{ 'background-image': 'url(' + user.user_info.photo + ')' }\"></span>\n                        </div>\n                    </div>\n\n                    <div class=\"form-group\">\n                        <div class=\"col-md-12\">\n                            <label type=\"button\" class=\"btn btn-primary btn-upload\">\n                                <span>Выберите новое изображение</span>\n                                <input type=\"file\" class=\"form-control\" name=\"photo\" @change=\"submitPhoto\">\n                            </label>\n                        </div>\n                    </div>\n                </form>\n            </div>\n        </div>\n\t</div>\n"
@@ -12610,7 +12680,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-19a1c0d9", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"vue":7,"vue-hot-reload-api":5}],11:[function(require,module,exports){
+},{"vue":7,"vue-hot-reload-api":5}],12:[function(require,module,exports){
 'use strict';
 
 var _vue = require('vue');
@@ -12625,13 +12695,9 @@ var _vuex = require('vuex');
 
 var _vuex2 = _interopRequireDefault(_vuex);
 
-var _Photo = require('./components/setting/Photo.vue');
+var _General = require('./components/setting/General.vue');
 
-var _Photo2 = _interopRequireDefault(_Photo);
-
-var _Contact = require('./components/setting/Contact.vue');
-
-var _Contact2 = _interopRequireDefault(_Contact);
+var _General2 = _interopRequireDefault(_General);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -12648,44 +12714,22 @@ var vm = new _vue2.default({
     },
 
     data: {
-        user: {
-            user_info: {
-                photo: ''
-            }
-        },
-
-        formPhotoInput: {},
-        formPhotoErrors: false,
-
-        formContactErrors: false,
-
-        loading: false
+        //
     },
 
     components: {
-        SettingPhoto: _Photo2.default,
-        SettingContact: _Contact2.default
+        Setting: _General2.default
     },
 
     methods: {
-        getUser: function getUser() {
-            var self = this;
-
-            this.loading = true;
-
-            this.$http.get('/api/v1/user').then(function (response) {
-                self.$set('user', response.json().user);
-
-                self.loading = false;
-            });
-        }
+        //
     },
 
     ready: function ready() {
-        this.getUser();
+        //
     }
 });
 
-},{"./components/setting/Contact.vue":9,"./components/setting/Photo.vue":10,"vue":7,"vue-resource":6,"vuex":8}]},{},[11]);
+},{"./components/setting/General.vue":10,"vue":7,"vue-resource":6,"vuex":8}]},{},[12]);
 
 //# sourceMappingURL=vue.js.map

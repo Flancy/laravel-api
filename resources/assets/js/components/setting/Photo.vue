@@ -35,7 +35,14 @@
 
 <script>
 	export default {
-  		props: ['user', 'formPhotoInput', 'formPhotoErrors'],
+  		props: ['user'],
+
+        data () {
+            return {
+                formPhotoInput: false,
+                formPhotoErrors: false,
+            }
+        },
 
   		http: {
   			headers: {
@@ -44,28 +51,29 @@
   		},
         
   		methods: {
-  			submitPhoto: function submitPhoto(e) {
+  			submitPhoto (e) {
 		      	var self = this;
 		        var form = $('#formPhoto');
-            var navPhoto = $('#navPhoto');
+                var navPhoto = $('#navPhoto');
 		        var formData = new FormData(form[0]);
 
-		        this.$parent.formPhotoInput = formData;
+		        this.formPhotoInput = formData;
 
-		      	this.$http.post('/setting/photo', this.$parent.formPhotoInput).then(function (response) {
+		      	this.$http.post('/setting/photo', this.formPhotoInput).then(function (response) {
 		          	form.onsubmit = function() {
-		              return false;
+                        return false;
 		        	} 
+
 		        	self.$parent.$set('user.user_info.photo', response.json().image);
-              navPhoto.attr('src', self.user.user_info.photo);
+                    navPhoto.attr('src', self.user.user_info.photo);
 		        })
 		        .catch(function (data, status, request) {
-		          var errors = data.json().errors;
-		          this.formPhotoErrors = errors;
+                    var errors = data.json().errors;
+                    self.formPhotoErrors = errors;
 		        })
 
 		        setTimeout(function () {
-	        		self.$parent.$set('formPhotoErrors', false)
+	        		self.$set('formPhotoErrors', false)
 	        	}, 5000);
 		    }
   		}
